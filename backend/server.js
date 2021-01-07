@@ -13,6 +13,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
+var distDir = __dirname + "/dist/";
+app.use(express.static(distDir));
+
 mongoose.connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -58,6 +61,10 @@ app.post("/addCalculation", (req, res) => {
         }
     });
 });
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname,'..','dist','calApp','index.html'));
+  });
 
 server.listen(PORT, () => {
     console.log(`Listening on Port: ${PORT}`);
