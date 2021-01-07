@@ -22,7 +22,8 @@ export class CalculatorComponent implements OnInit {
     this.getCalculations();
   }
 
-  baseURL: string = "http://localhost:8000/";
+  // baseURL: string = "http://localhost:8000"; //For Developemnt
+  baseURL: string = window.location.origin; //For Production
   input: string = '';
   result: string = '';
   formulaTemp: string = '';
@@ -125,7 +126,7 @@ export class CalculatorComponent implements OnInit {
   }
 
   getCalculations() {
-    const GET_CALCULATIONS_URL = this.baseURL + "getCalculations";
+    const GET_CALCULATIONS_URL = this.baseURL + "/getCalculations";
 
     this.http.get<any>(GET_CALCULATIONS_URL).subscribe({
       next: data => {
@@ -138,7 +139,7 @@ export class CalculatorComponent implements OnInit {
   }
 
   addCalculation(calculation: string) {
-    const ADD_CALCULATION_URL = this.baseURL + "addCalculation";
+    const ADD_CALCULATION_URL = this.baseURL + "/addCalculation";
 
     let body = {
       "calculation": calculation
