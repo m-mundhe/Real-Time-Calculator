@@ -13,6 +13,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
+//Connecting to Database
 mongoose.connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -22,6 +23,7 @@ mongoose.connect(process.env.MONGO_URL, {
     console.log("Connected to Database");
 });
 
+//Setting up the Socket connection
 io.origins("*:*")
 io.on('connection', socket => {
     socket.on('newData', function (msg) {
@@ -29,6 +31,7 @@ io.on('connection', socket => {
     });
 })
 
+//GET call for getting latest 10 calculations
 app.get("/getCalculations", (req, res) => {
     Calculator.find()
         .sort([["createdAt", "desc"]])
@@ -37,7 +40,7 @@ app.get("/getCalculations", (req, res) => {
             if (err) {
                 console.log(err);
                 return res.status(400).json({
-                    error: err,
+                    error: "Error while getting calculations",
                 });
             } else {
                 return res.json(data);
@@ -45,6 +48,7 @@ app.get("/getCalculations", (req, res) => {
         });
 });
 
+//POST call for adding the calculation
 app.post("/addCalculation", (req, res) => {
     const calculator = new Calculator({
         calculation: req.body.calculation,
@@ -52,7 +56,7 @@ app.post("/addCalculation", (req, res) => {
     calculator.save().then((data) => {
         if (!data) {
             return res.status(400).json({
-                error: "Error while adding a calculation",
+                error: "Error while adding calculation",
             });
         } else {
             return res.json(data);
@@ -60,6 +64,7 @@ app.post("/addCalculation", (req, res) => {
     });
 });
 
+//Serving static files for production environment
 if (process.env.ENV === "prod") {
     var distDir = path.join(__dirname, 'client', 'dist', 'calApp');
     app.use(express.static(distDir));
@@ -69,6 +74,7 @@ if (process.env.ENV === "prod") {
     });
 }
 
+//Listening the server for requests
 server.listen(PORT, () => {
     console.log(`Listening on Port: ${PORT}`);
 });

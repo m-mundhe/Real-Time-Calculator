@@ -24,26 +24,12 @@ export class CalculatorComponent implements OnInit {
 
   // baseURL: string = "http://localhost:8000"; //For Developemnt
   baseURL: string = window.location.origin; //For Production
-  // baseURL: string = "https://tranquil-island-79700.herokuapp.com"; //For Production
   input: string = '';
   result: string = '';
   formulaTemp: string = '';
   history: any[] = [];
 
   pressNum(num: string) {
-
-    //Do Not Allow . more than once
-    // if (num==".") {
-    //   if (this.input !="" ) {
-
-    //     const lastNum=this.getLastNumber()
-    //     console.log(lastNum.lastIndexOf("."))
-    //     if (lastNum.lastIndexOf(".") >= 0) return;
-    //   }
-    // }
-
-    //Do Not Allow 0 at beginning. 
-    //Javascript will throw Octal literals are not allowed in strict mode.
     if (num == "0") {
       if (this.input == "") {
         return;
@@ -60,18 +46,14 @@ export class CalculatorComponent implements OnInit {
 
   getLastOperand() {
     let pos: number;
-    //console.log(this.input)
     pos = this.input.toString().lastIndexOf("+")
     if (this.input.toString().lastIndexOf("-") > pos) pos = this.input.lastIndexOf("-")
     if (this.input.toString().lastIndexOf("*") > pos) pos = this.input.lastIndexOf("*")
     if (this.input.toString().lastIndexOf("/") > pos) pos = this.input.lastIndexOf("/")
-    //console.log('Last ' + this.input.substr(pos + 1))
     return this.input.substr(pos + 1)
   }
 
   pressOperator(op: string) {
-
-    //Do not allow operators more than once
     const lastKey = this.input[this.input.length - 1];
     if (lastKey === '/' || lastKey === '*' || lastKey === '-' || lastKey === '+') {
       return;
@@ -80,7 +62,6 @@ export class CalculatorComponent implements OnInit {
     this.input = this.input + op
     this.calcAnswer();
   }
-
 
   clear() {
     if (this.input != "") {
@@ -109,18 +90,14 @@ export class CalculatorComponent implements OnInit {
       formula = formula.substr(0, formula.length - 1);
     }
 
-    //console.log("Formula " + formula);
     this.formulaTemp = formula;
     this.result = eval(formula);
-    //console.log('result',this.result);
   }
 
   getAnswer() {
     this.calcAnswer();
     this.input = this.result;
     let expression = this.formulaTemp + " = " + this.input;
-    //console.log(expression);
-    //this.history.push(expression);//add
     this.addCalculation(expression);
 
     if (this.input == "0") this.input = "";
@@ -159,7 +136,6 @@ export class CalculatorComponent implements OnInit {
     this.http.post<any>(ADD_CALCULATION_URL, body, options).subscribe({
       next: data => {
         this.socket.emit("newData");
-        //this.getCalculations();
       },
       error: error => {
         console.error('There was an error!', error);
