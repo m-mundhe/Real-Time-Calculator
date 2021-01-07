@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
-var distDir = __dirname + "/dist/";
+var distDir = path.join(__dirname, '..', 'dist', 'calApp');
 app.use(express.static(distDir));
 
 mongoose.connect(process.env.MONGO_URL, {
@@ -62,9 +62,11 @@ app.post("/addCalculation", (req, res) => {
     });
 });
 
+
+
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname,'..','dist','calApp','index.html'));
-  });
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
 
 server.listen(PORT, () => {
     console.log(`Listening on Port: ${PORT}`);
