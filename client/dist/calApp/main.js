@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/maheshwarmundhe/Documents/Project/calApp/src/main.ts */"zUnb");
+module.exports = __webpack_require__(/*! /Users/maheshwarmundhe/Documents/Project/calApp/client/src/main.ts */"zUnb");
 
 
 /***/ }),
@@ -70,6 +70,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 function CalculatorComponent_li_56_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "li", 16);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
@@ -83,8 +84,9 @@ class CalculatorComponent {
     constructor(http, socket) {
         this.http = http;
         this.socket = socket;
-        // baseURL: string = "http://localhost:8000/";
-        this.baseURL = window.location.hostname;
+        // baseURL: string = "http://localhost:8000"; //For Developemnt
+        this.baseURL = window.location.origin; //For Production
+        // baseURL: string = "https://tranquil-island-79700.herokuapp.com"; //For Production
         this.input = '';
         this.result = '';
         this.formulaTemp = '';
@@ -177,10 +179,12 @@ class CalculatorComponent {
             this.input = "";
     }
     getCalculations() {
-        console.log(window.location.hostname);
         const GET_CALCULATIONS_URL = this.baseURL + "/getCalculations";
-        console.log(GET_CALCULATIONS_URL);
-        this.http.get(GET_CALCULATIONS_URL).subscribe({
+        let headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
+            'Content-Type': 'application/json'
+        });
+        let options = { headers: headers };
+        this.http.get(GET_CALCULATIONS_URL, options).subscribe({
             next: data => {
                 this.history = data;
             },
@@ -194,7 +198,11 @@ class CalculatorComponent {
         let body = {
             "calculation": calculation
         };
-        this.http.post(ADD_CALCULATION_URL, body).subscribe({
+        let headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
+            'Content-Type': 'application/json'
+        });
+        let options = { headers: headers };
+        this.http.post(ADD_CALCULATION_URL, body, options).subscribe({
             next: data => {
                 this.socket.emit("newData");
                 //this.getCalculations();
@@ -399,7 +407,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const config = { url: 'http://localhost:8000', options: {} };
+// const config: SocketIoConfig = { url: 'http://localhost:8000', options: {} }; //For Developemnt
+const config = { url: window.location.origin, options: {} }; //For Production
+// const config: SocketIoConfig = { url: "https://tranquil-island-79700.herokuapp.com", options: {} }; //For Production
 class AppModule {
 }
 AppModule.ɵmod = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineNgModule"]({ type: AppModule, bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_3__["AppComponent"]] });

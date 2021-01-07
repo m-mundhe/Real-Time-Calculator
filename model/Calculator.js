@@ -6,8 +6,4 @@ const calculatorSchema = mongoose.Schema({
     timestamps: true
 });
 
-// module.exports.calculatorSchema = calculatorSchema;
-
-// module.exports.calculator = mongoose.model("calculator", calculatorSchema);
-
 module.exports = mongoose.model("calculator", calculatorSchema, "calculator");
