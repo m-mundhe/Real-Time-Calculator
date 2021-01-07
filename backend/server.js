@@ -35,8 +35,9 @@ app.get("/getCalculations", (req, res) => {
         .limit(10)
         .exec((err, data) => {
             if (err) {
+                console.log(err);
                 return res.status(400).json({
-                    error: "Error fetching data",
+                    error: err,
                 });
             } else {
                 return res.json(data);
@@ -51,7 +52,7 @@ app.post("/addCalculation", (req, res) => {
     calculator.save().then((data) => {
         if (!data) {
             return res.status(400).json({
-                error: "Calculation Error",
+                error: "Error while adding a calculation",
             });
         } else {
             return res.json(data);

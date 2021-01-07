@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Socket } from 'ngx-socket-io';
 
 @Component({
@@ -128,7 +128,12 @@ export class CalculatorComponent implements OnInit {
   getCalculations() {
     const GET_CALCULATIONS_URL = this.baseURL + "/getCalculations";
 
-    this.http.get<any>(GET_CALCULATIONS_URL).subscribe({
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    let options = { headers: headers };
+
+    this.http.get<any>(GET_CALCULATIONS_URL, options).subscribe({
       next: data => {
         this.history = data;
       },
@@ -145,7 +150,12 @@ export class CalculatorComponent implements OnInit {
       "calculation": calculation
     };
 
-    this.http.post<any>(ADD_CALCULATION_URL, body).subscribe({
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    let options = { headers: headers };
+
+    this.http.post<any>(ADD_CALCULATION_URL, body, options).subscribe({
       next: data => {
         this.socket.emit("newData");
         //this.getCalculations();
