@@ -23,7 +23,8 @@ export class CalculatorComponent implements OnInit {
   }
 
   // baseURL: string = "http://localhost:8000"; //For Developemnt
-  baseURL: string = window.location.origin; //For Production
+  // baseURL: string = window.location.origin; //For Production
+  baseURL: string = "https://tranquil-island-79700.herokuapp.com"; //For Production
   input: string = '';
   result: string = '';
   formulaTemp: string = '';
