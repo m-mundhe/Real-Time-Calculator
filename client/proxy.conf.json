@@ -1,5 +1,5 @@
 {
-    "/": {
+    "/api": {
       "target": "https://tranquil-island-79700.herokuapp.com",
       "secure": false
     }
