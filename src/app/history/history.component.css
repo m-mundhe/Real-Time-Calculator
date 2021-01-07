@@ -1,0 +1,27 @@
+* { font-family: Lato}
+ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  grid-auto-rows: 30px;
+  list-style: none;
+  grid-gap: 10px;
+}
+li{
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-auto-rows: 24px;
+}
+li span {
+  padding: 5px;
+  border-radius: 12px;
+  color: white;
+  box-sizing: border-box;
+  font-size: 12px;
+  font-family: 'Lato';
+  cursor: pointer;
+}
+
+li span:hover {
+  background: #f44!important;
+  box-shadow: 0 0 6px 1px rgba(44,44,44,0.5)
+}
