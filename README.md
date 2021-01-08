@@ -1,6 +1,6 @@
 # Real-Time-Calculator
-A Real Time Calculator which allows multiple users to perform a real time calculations which can be shared amongst the connected users.
-The application is developed using MEAN stack and Socket.io and deployed on Heroku.
+
+A real time calculator that allows multiple users to simultaneously perform dynamic calculations with logging that can be seen across all users accessing the website. The application is developed using MEAN stack and Socket.io, and is deployed on Heroku.
 
 Link to the application: https://tranquil-island-79700.herokuapp.com/ 
 
